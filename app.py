@@ -195,16 +195,15 @@ def create_adm_route():
             "tipo": "agente",
             "data_criacao": datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
+        
+        from firebase_functions import add_adm
+        adm_id = add_adm(adm_data)
 
-        # Adiciona o agente no Firestore
-        from firebase_functions import add_agent
-        agent_id = add_agent(adm_data)
-
-        if agent_id:
-            flash('Agente registrado com sucesso!', 'success')
+        if adm_id:
+            flash('Administrador registrado com sucesso!', 'success')
             return redirect(url_for('pagina_registro'))
         else:
-            flash('Erro ao salvar os dados do agente no banco de dados.', 'danger')
+            flash('Erro ao salvar os dados do admin no banco de dados.', 'danger')
             return redirect(url_for('pagina_registro'))
 
 # Rota para logout administrativo
